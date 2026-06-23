@@ -19,13 +19,13 @@ col_limit = checkpoints[semester_choice]
 
 @st.cache_data
 def load_template():
-    df_temp = pd.read_excel('ПМИ4_общий_датасет.xlsx', index_col=0)
+    df_temp = pd.read_excel('data/ПМИ4_общий_датасет.xlsx', index_col=0)
     df_temp.columns = [str(col).strip() for col in df_temp.columns]
     return df_temp
 
 @st.cache_resource
 def load_graph():
-    graph_df = pd.read_excel('Граф знаний.xlsx', header=None, names=['Source', 'Target'])
+    graph_df = pd.read_excel('data/Граф знаний.xlsx', header=None, names=['Source', 'Target'])
     graph_df.dropna(inplace=True)
     graph_df['Source'] = graph_df['Source'].astype(str).str.strip()
     graph_df['Target'] = graph_df['Target'].astype(str).str.strip()
@@ -36,7 +36,7 @@ def load_graph():
 
 @st.cache_resource
 def load_ml_model(semester):
-    model_path = f"model_semester_{semester}.pkl"
+    model_path = f"models/model_semester_{semester}.pkl"
     try:
         return joblib.load(model_path)
     except FileNotFoundError:
